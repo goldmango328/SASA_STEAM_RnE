@@ -72,8 +72,15 @@ with requests.Session() as s:
     for page_num in range(1,PAGE_TOTAL[str(CATEGORY_NUM)]):
         section_board_list_data = bs(s.get('https://go.sasa.hs.kr/board/lists/'+str(CATEGORY_NUM)+'/page/'+str(page_num)).text, 'html.parser')
         board_list_data = section_board_list_data.select('div.box-body tbody span.hidden-xs')
-        url_list_data = section_board_list_data.select('div.box-body tbody span td')
+        url_list_data = section_board_list_data.select('div.box-body tbody a')
         time_list_data = section_board_list_data.select('div.box-body tbody time')
+
+        url_list = []
+        for data in url_list_data:
+            if 'board'== data.get('href').split('/')[1]:
+                url = "https://go.sasa.hs.kr"+'/'.join(data.get('href').split('/'))
+                url_list.append(url)
+                
 
         for i in range(len(time_list_data)):
             data =  time_list_data[i].text
@@ -82,16 +89,19 @@ with requests.Session() as s:
             days = int(data[6])*10 + int(data[7])
             list_time = list_time.replace(month = months,day = days)
             index = -(list_time - datetime.datetime.now()).days
-            print(url_list_data[i])
             
             if index <= day_num:
-                dataset = (board_list_data[i].text, url_list_data[i])
+                dataset = (board_list_data[i].text, url_list[i])
                 board_list[index].append(dataset)
 
     day = 0
     for board in board_list:
+        cnt_idx = 0
+        print(("="*11+" %02d days ago " +"="*11) % day)
         for data in board:
-            print("%d days ago : %s | %s" % (day, data[0], data[1]))
-
+            print("[%d] 제목:%s url:%s" % (cnt_idx, data[0], data[1]))
+        if len(board)==0:
+            print("NONE")
+            
         day += 1
             
