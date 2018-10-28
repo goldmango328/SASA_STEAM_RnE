@@ -10,44 +10,42 @@ import datetime
 import requests
 from bs4 import BeautifulSoup as bs
 
+# 로그인을 위해 필요한 정보 id, password
 LOGIN_INFO = {
     'id': '1786',
     'passwd': 'wlaudrma!328'
 }
 
-day_num = 2
-
 def get_DayNum():
-    day_num = int(input())
+    """
+    며칠전까지의 데이터를 보고싶은지를 사용자가 입력하는 함수
+    :return day_num: 데이터를 볼 기한을 담은 변수
+    """
+    day_num = int(input()) # 며칠 전까지의 데이터를 받고싶은지 입력
     return day_num
-    
-now = datetime.date.today()
-tmp_date = now + datetime.timedelta(days=-day_num)  
-min_date = "%s-%02d-%02d" % (str(tmp_date.year)[2:4], tmp_date.month, tmp_date.day)  # 2일전 기준으로 18-01-01 과 같은 형태 만들기
-
 
 def get_Category():
     """
     사용자가 보고 싶은 카테고리를 받는 함수
     :return notice: 일반 공지 = 22 or 교과 공지 = 23 or 대회 및 캠프 = 16 or 분실물 = 2
     """
-    print("="*11 + " 달빛학사 응용 프로그램 " + "="*11)
-    print("일반 공지 | 교과 공지 | 대회 및 캠프 | 분실물")
+    print("="*11 + " 달빛학사 응용 프로그램 " + "="*11) # 프로그램의 이름 출력
+    print("일반 공지 | 교과 공지 | 대회 및 캠프 | 분실물") # 검색 가능한 카테고리
 
     notice = -1
     while notice == -1:
         notice = input(">> 어떤 공지를 확인하시겠습니까? ")
-        if notice == "일반 공지":
-            notice = 22
-        elif notice == "교과 공지":
+        if notice == "일반 공지": # 달빛학사에서 일반 공지의 번호 22
+            notice = 22 # example : go.sasa.hs.kr/board/lists/22/
+        elif notice == "교과 공지": # 달빛학사에서 교과 공지의 번호 23
             notice = 23
-        elif notice == "대회 및 캠프":
+        elif notice == "대회 및 캠프": # 달빛학사에서 대회 및 캠프의 번호 16
             notice = 16
-        elif notice == "분실물":
+        elif notice == "분실물": # 달빛학사에서 분실물의 번호 2
             notice = 2
         else :
             notice = -1
-    return notice
+    return notice # 카테고리의 번호를 반환한다
     
 with requests.Session() as s:
     first_page = s.get('https://go.sasa.hs.kr')
