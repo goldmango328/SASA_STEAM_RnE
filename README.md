@@ -2,6 +2,8 @@
 Making this UNTIL 2018.11.07  
 - Android Studio :: 기본 형태의 어플리케이션, 기본 기능 구현  
 - Processing :: 세계 미세먼지 / 국내 미세먼지 지도 제작 및 실질적인 시각화 부분에서의 구현  
+              - 히트맵(HeatMap)  
+              - 트리맵(TreemMap)  
 
 ## EDITS   
 Date : 2018.10.24.  
@@ -9,6 +11,18 @@ Edit :
 - create file / respositories  
 - 역할분담 및 추후 프로젝트 진행 계획  
 
+Date : 2018.11.06.  
+Edit :  
+- processing TreeMap 완성  
+  
+Date : 2018.11.07.  
+Edit :  
+- 일반 R&E 중간점검 보고서 작성  
+- 프로젝트 마무리  
+
+Date : 2018.11.08.  
+Edit :  
+- Android Studio apk 완성  
 
 ## Research Plans  
 *앱기획서 스크린샷 첨부*  
